@@ -361,7 +361,7 @@ export const AccountManagement: React.FC = () => {
             <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-900">
               <span className="font-semibold block mb-0.5">Historical Record Protection Policy</span>
               <p className="text-[11px] text-amber-800 leading-relaxed">
-                Even if deactivated, student attendance, submitted marks, arrear records, and published results are never erased from the relational schema (Section 4.1.1).
+                Even if deactivated, student attendance, submitted marks, arrear records, and published results are never erased from the relational schema.
               </p>
             </div>
 

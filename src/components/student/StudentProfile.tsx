@@ -41,11 +41,11 @@ export const StudentProfile: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Header (Canonical Title & Single Heading) */}
       <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-2xs">
-        <h2 className="text-base font-bold text-slate-900">Student Academic Record &amp; Bio</h2>
+        <h2 className="text-base font-bold text-slate-900">Profile</h2>
         <p className="text-xs text-slate-500 mt-0.5">
-          Official identity and enrolment credentials. Academic properties remain under administrative governance (Section 4.3.8).
+          Official identity and enrolment credentials. Academic properties remain under administrative governance.
         </p>
       </div>
 
@@ -69,7 +69,7 @@ export const StudentProfile: React.FC = () => {
             {currentStudentProfile?.registerNumber}
           </span>
           <span className="text-xs text-slate-500 mt-1">
-            Semester {currentStudentProfile?.currentSemester} · Section {activeEnrollment?.classGroupName || 'CSE-5A'}
+            Semester {currentStudentProfile?.currentSemester} · Section {activeEnrollment?.classGroupName || 'A'}
           </span>
 
           <div className="w-full mt-6 pt-4 border-t border-slate-100 text-left space-y-2.5 text-xs text-slate-600">
@@ -107,15 +107,15 @@ export const StudentProfile: React.FC = () => {
               </div>
               <div className="p-3 bg-slate-50 border border-slate-200 rounded">
                 <span className="text-slate-400 block text-[10px] uppercase font-sans">Academic Period</span>
-                <span className="font-bold text-slate-900">AY {activeEnrollment?.academicYear || '2025–2026'}</span>
+                <span className="font-bold text-slate-900">AY {activeEnrollment?.academicYear || '2026-2027'}</span>
               </div>
               <div className="p-3 bg-slate-50 border border-slate-200 rounded">
                 <span className="text-slate-400 block text-[10px] uppercase font-sans">Class Section</span>
-                <span className="font-bold text-slate-900 truncate block">{activeEnrollment?.classGroupName || 'CSE-5A'}</span>
+                <span className="font-bold text-slate-900 truncate block">Section {activeEnrollment?.classGroupName?.includes('Section') ? activeEnrollment.classGroupName : 'A'}</span>
               </div>
               <div className="p-3 bg-slate-50 border border-slate-200 rounded">
                 <span className="text-slate-400 block text-[10px] uppercase font-sans">Registered Credits</span>
-                <span className="font-bold text-indigo-700">{activeEnrollment?.creditsRegistered || 18} cr</span>
+                <span className="font-bold text-indigo-700">{activeEnrollment?.creditsRegistered || 17} cr</span>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@ export const StudentProfile: React.FC = () => {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <History className="w-4 h-4 text-indigo-600" />
-                <h3 className="text-sm font-bold text-slate-900">Enrolment &amp; Term Progression Trace (Section 7.2)</h3>
+                <h3 className="text-sm font-bold text-slate-900">Enrolment &amp; Term Progression Trace</h3>
               </div>
               <span className="text-xs font-mono text-slate-400">{myEnrollments.length} Recorded Term(s)</span>
             </div>
@@ -206,11 +206,11 @@ export const StudentProfile: React.FC = () => {
             </form>
           </div>
 
-          {/* Privacy & FERPA Compliance Notice */}
+          {/* Privacy Compliance Notice */}
           <div className="p-4 bg-slate-100 rounded-xl border border-slate-200/90 flex items-start gap-3 text-xs text-slate-600">
             <ShieldCheck className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
             <div className="leading-relaxed">
-              <strong className="font-semibold text-slate-900">Student Data Privacy (Section 4.3.9):</strong> Academic records, attendance records, semester marks, and grievance submissions are strictly sandboxed. Students cannot view other students&apos; private records, nor can they directly modify official marks or timetable master entries.
+              <strong className="font-semibold text-slate-900">Student Data Privacy:</strong> Academic records, attendance records, semester marks, and complaint submissions are strictly sandboxed. Students cannot view other students&apos; private records, nor can they directly modify official marks or timetable master entries.
             </div>
           </div>
         </div>

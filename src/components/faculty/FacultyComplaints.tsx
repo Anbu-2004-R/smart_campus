@@ -81,12 +81,12 @@ export const FacultyComplaints: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Header (Canonical Title & Single Heading) */}
       <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-base font-bold text-slate-900">Faculty Grievance Redressal & Work Orders</h2>
+          <h2 className="text-base font-bold text-slate-900">Complaints</h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Resolve tickets assigned to your department / laboratory and submit personal campus service requests.
+            Resolve tickets assigned to your department / laboratory and submit campus service requests.
           </p>
         </div>
 
@@ -94,7 +94,7 @@ export const FacultyComplaints: React.FC = () => {
           <div className="flex items-center p-1 bg-slate-100 rounded-lg border border-slate-200 text-xs">
             <button
               onClick={() => setActiveTab('ASSIGNED')}
-              className={`px-3 py-1.5 font-medium rounded-md transition-colors ${
+              className={`px-3 py-1.5 font-medium rounded-md transition-colors cursor-pointer ${
                 activeTab === 'ASSIGNED' ? 'bg-white text-slate-900 shadow-xs font-semibold' : 'text-slate-600'
               }`}
             >
@@ -102,7 +102,7 @@ export const FacultyComplaints: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('MY_SUBMITTED')}
-              className={`px-3 py-1.5 font-medium rounded-md transition-colors ${
+              className={`px-3 py-1.5 font-medium rounded-md transition-colors cursor-pointer ${
                 activeTab === 'MY_SUBMITTED' ? 'bg-white text-slate-900 shadow-xs font-semibold' : 'text-slate-600'
               }`}
             >
@@ -112,10 +112,10 @@ export const FacultyComplaints: React.FC = () => {
 
           <button
             onClick={() => setIsSubmitOpen(true)}
-            className="px-3.5 py-2 text-xs font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition-colors shadow-xs flex items-center gap-2"
+            className="px-3.5 py-2 text-xs font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition-colors shadow-xs flex items-center gap-2 cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>File New Grievance</span>
+            <span>File New Complaint</span>
           </button>
         </div>
       </div>

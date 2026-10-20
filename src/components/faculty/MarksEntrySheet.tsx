@@ -154,7 +154,7 @@ export const MarksEntrySheet: React.FC = () => {
         <div className="p-4 bg-amber-50/80 border border-amber-200 rounded-xl flex items-start gap-3 text-xs text-amber-900">
           <Lock className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
           <div className="leading-relaxed">
-            <strong className="font-semibold text-amber-950">Examination is Officially Published:</strong> Per Section 4.1.3,
+            <strong className="font-semibold text-amber-950">Examination is Officially Published:</strong> Per institutional regulations,
             direct modifications to published marks are restricted. Any grade or marks revisions now require an official correction
             request submitted to the Administrator with justification and verification records.
           </div>

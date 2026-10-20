@@ -199,10 +199,10 @@ export const EnrollmentManagement: React.FC = () => {
               Academic Enrolment Architecture
             </span>
             <span className="text-slate-300">·</span>
-            <span className="text-xs text-slate-500 font-mono">Section 7.2 & 4.1</span>
+            <span className="text-xs text-slate-500 font-mono">Institutional Registrar Records</span>
           </div>
           <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
-            Student Enrolment &amp; Admissions Management
+            Enrollment Management
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
             Administer admissions, student registrations, class section memberships, and semester progressions with historical record preservation.
@@ -515,7 +515,7 @@ export const EnrollmentManagement: React.FC = () => {
           <div className="p-4 bg-indigo-50/70 border border-indigo-200 rounded-xl flex items-start gap-3 text-xs text-indigo-900">
             <Award className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
             <div>
-              <strong className="font-semibold block mb-0.5">Section 7.2 Term Progression Architecture:</strong>
+              <strong className="font-semibold block mb-0.5">Term Progression Architecture:</strong>
               When students advance between academic semesters, the system transitions existing records to <em>PROMOTED</em> status and generates a new active enrolment record. All historical marks, attendance percentages, and examination outcomes from previous semesters remain permanently accessible and unmodified.
             </div>
           </div>
@@ -907,7 +907,7 @@ export const EnrollmentManagement: React.FC = () => {
           isOpen={!!selectedEnrollmentHistoryStudentId}
           onClose={() => setSelectedEnrollmentHistoryStudentId(null)}
           title="Student Academic Enrolment History"
-          subtitle={`Section 7.2 student_enrollments historical trace`}
+          subtitle="Continuous semester records & historical progression trace"
         >
           <div className="space-y-4 text-xs">
             <div className="divide-y divide-slate-100">

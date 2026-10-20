@@ -31,12 +31,12 @@ export const FacultyTimetable: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Header (Canonical Title & Single Heading) */}
       <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-base font-bold text-slate-900">Personal Teaching Schedule & Classroom Duties</h2>
+          <h2 className="text-base font-bold text-slate-900">Timetable</h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Official teaching assignments for {currentFacultyProfile?.fullName}. Official schedules are maintained by the Administrator (Section 4.2.4).
+            Official teaching assignments for {currentFacultyProfile?.fullName}. Official schedules are maintained by the Administrator.
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs font-mono text-slate-600 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">

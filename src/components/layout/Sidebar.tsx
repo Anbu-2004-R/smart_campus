@@ -17,9 +17,7 @@ import {
   TrendingUp,
   UserCircle,
   LogOut,
-  Sparkles,
   School,
-  ChevronRight,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -42,11 +40,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isMobileOpen,
   onCloseMobile,
 }) => {
-  const { currentUser, currentRole, currentStudentProfile, currentFacultyProfile, logout, switchUser, availableUsers } =
-    useAuth();
+  const { currentUser, currentRole, currentStudentProfile, currentFacultyProfile, logout } = useAuth();
   const { correctionRequests, complaints, exams, admissionApplications } = useERP();
 
-  // Compute pending badges
+  // Badges
   const pendingFacultyCorrections = correctionRequests.filter((r) => r.status === 'PENDING_FACULTY').length;
   const pendingAdminCorrections = correctionRequests.filter((r) => r.status === 'PENDING_ADMIN').length;
   const openComplaints = complaints.filter((c) => c.status === 'SUBMITTED' || c.status === 'UNDER_REVIEW').length;
@@ -56,63 +53,92 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ).length;
 
   const adminNav: NavItem[] = [
-    { id: 'admin-dashboard', label: 'Campus Overview', icon: LayoutDashboard },
+    { id: 'admin-dashboard', label: 'Dashboard', icon: LayoutDashboard },
     {
       id: 'admin-enrollment',
-      label: 'Student Enrolment',
+      label: 'Enrollment',
       icon: UserCheck,
       badge: pendingApplications > 0 ? pendingApplications : undefined,
     },
-    { id: 'admin-accounts', label: 'User Accounts', icon: Users },
+    { id: 'admin-accounts', label: 'Accounts', icon: Users },
     {
       id: 'admin-attendance',
-      label: 'Attendance Approvals',
+      label: 'Attendance',
       icon: CalendarCheck,
       badge: pendingAdminCorrections > 0 ? pendingAdminCorrections : undefined,
     },
     {
       id: 'admin-exams',
-      label: 'Exam & Results',
+      label: 'Examinations',
       icon: GraduationCap,
       badge: unPublishedExams > 0 ? unPublishedExams : undefined,
     },
-    { id: 'admin-timetable', label: 'Timetable Manager', icon: CalendarDays },
+    { id: 'admin-timetable', label: 'Timetable', icon: CalendarDays },
     {
       id: 'admin-complaints',
-      label: 'Complaint Desk',
+      label: 'Complaints',
       icon: LifeBuoy,
       badge: openComplaints > 0 ? openComplaints : undefined,
     },
-    { id: 'admin-settings', label: 'Academic Settings', icon: Settings },
-    { id: 'admin-audit', label: 'Audit Trail', icon: ShieldCheck },
+    { id: 'admin-settings', label: 'Settings', icon: Settings },
+    { id: 'admin-audit', label: 'Audit Logs', icon: ShieldCheck },
   ];
 
   const facultyNav: NavItem[] = [
-    { id: 'faculty-dashboard', label: 'Faculty Desk', icon: LayoutDashboard },
-    { id: 'faculty-attendance', label: 'Attendance Register', icon: CalendarCheck },
+    { id: 'faculty-dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'faculty-attendance', label: 'Attendance', icon: CalendarCheck },
     {
       id: 'faculty-corrections',
-      label: '7-Day Corrections',
+      label: 'Corrections',
       icon: CheckCircle2,
       badge: pendingFacultyCorrections > 0 ? pendingFacultyCorrections : undefined,
     },
     { id: 'faculty-marks', label: 'Marks Entry', icon: FileSpreadsheet },
-    { id: 'faculty-timetable', label: 'Teaching Schedule', icon: Clock },
-    { id: 'faculty-complaints', label: 'Assigned Complaints', icon: LifeBuoy },
+    { id: 'faculty-timetable', label: 'Timetable', icon: Clock },
+    {
+      id: 'faculty-complaints',
+      label: 'Complaints',
+      icon: LifeBuoy,
+      badge: complaints.filter((c) => c.assignedToFacultyId === currentFacultyProfile?.id && (c.status === 'SUBMITTED' || c.status === 'UNDER_REVIEW' || c.status === 'IN_PROGRESS')).length || undefined,
+    },
   ];
 
+  // Strictly canonical student navigation terms (Section 2.7)
   const studentNav: NavItem[] = [
-    { id: 'student-dashboard', label: 'Student Home', icon: LayoutDashboard },
-    { id: 'student-attendance', label: 'Attendance & Risk', icon: CalendarCheck },
-    { id: 'student-results', label: 'Results & Transcript', icon: GraduationCap },
-    { id: 'student-timetable', label: 'Class Schedule', icon: CalendarDays },
-    { id: 'student-analytics', label: 'Academic Analytics', icon: TrendingUp },
-    { id: 'student-complaints', label: 'Grievance Tracking', icon: LifeBuoy },
-    { id: 'student-profile', label: 'Student Profile', icon: UserCircle },
+    { id: 'student-dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'student-attendance', label: 'Attendance', icon: CalendarCheck },
+    { id: 'student-results', label: 'Results', icon: GraduationCap },
+    { id: 'student-timetable', label: 'Timetable', icon: CalendarDays },
+    { id: 'student-analytics', label: 'Analytics', icon: TrendingUp },
+    {
+      id: 'student-complaints',
+      label: 'Complaints',
+      icon: LifeBuoy,
+      badge: complaints.filter((c) => c.submittedByUserId === currentUser?.id && (c.status === 'SUBMITTED' || c.status === 'UNDER_REVIEW' || c.status === 'IN_PROGRESS')).length || undefined,
+    },
+    { id: 'student-profile', label: 'Profile', icon: UserCircle },
   ];
 
   const navItems =
     currentRole === 'ADMIN' ? adminNav : currentRole === 'FACULTY' ? facultyNav : studentNav;
+
+  const getDisplayName = () => {
+    if (currentRole === 'ADMIN') return 'Office of the Registrar';
+    if (currentRole === 'FACULTY') return currentFacultyProfile?.fullName || 'Faculty Member';
+    return currentStudentProfile?.fullName || 'Student';
+  };
+
+  const getIdentifier = () => {
+    if (currentRole === 'ADMIN') return 'Institutional Root';
+    if (currentRole === 'FACULTY') return currentFacultyProfile?.employeeId || 'EMP-CSE-001';
+    return currentStudentProfile?.registerNumber || '21CS101';
+  };
+
+  const getInitials = (name: string) => {
+    const parts = name.trim().split(' ');
+    if (parts.length >= 2) return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+    return name.slice(0, 2).toUpperCase();
+  };
 
   return (
     <>
@@ -138,16 +164,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="text-sm font-bold tracking-tight text-white whitespace-nowrap">
               Smart Campus ERP
             </div>
-            <div className="text-[11px] text-slate-400 font-mono tracking-tight">Academic Portal</div>
+            <div className="text-[11px] text-slate-400 font-medium tracking-tight">Academic Portal</div>
           </div>
         </div>
 
-        {/* Current Active Role Indicator */}
-        <div className="px-4 py-3 mx-4 my-3 rounded-lg bg-slate-800/60 border border-slate-700/60">
-          <div className="flex items-center justify-between text-xs mb-1">
-            <span className="text-slate-400 font-medium">Session Role</span>
+        {/* Current User Identity Panel (Section 7.4: Show name and role once in sidebar, neutral circle initials for students) */}
+        <div className="px-4 py-3 mx-4 my-3 rounded-lg bg-slate-800/70 border border-slate-700/60">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-slate-700 text-slate-200 border border-slate-600 flex items-center justify-center text-xs font-semibold shrink-0">
+              {getInitials(getDisplayName())}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-xs font-semibold text-white truncate">{getDisplayName()}</div>
+              <div className="text-[11px] text-slate-400 font-mono truncate">{getIdentifier()}</div>
+            </div>
             <span
-              className={`text-[10px] font-mono px-1.5 py-0.5 rounded font-semibold tracking-wide ${
+              className={`text-[9px] font-mono px-1.5 py-0.5 rounded font-semibold tracking-wide shrink-0 ${
                 currentRole === 'ADMIN'
                   ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
                   : currentRole === 'FACULTY'
@@ -158,23 +190,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
               {currentRole}
             </span>
           </div>
-          <div className="text-xs font-semibold text-white truncate">
-            {currentRole === 'ADMIN'
-              ? 'Administrator Office'
-              : currentRole === 'FACULTY'
-              ? currentFacultyProfile?.fullName || 'Faculty Member'
-              : currentStudentProfile?.fullName || 'Student'}
-          </div>
-          <div className="text-[11px] text-slate-400 font-mono truncate">
-            {currentRole === 'ADMIN'
-              ? 'Institutional Root'
-              : currentRole === 'FACULTY'
-              ? currentFacultyProfile?.employeeId
-              : currentStudentProfile?.registerNumber}
-          </div>
         </div>
 
-        {/* Navigation Items */}
+        {/* Navigation Items (Single fixed width per breakpoint, clean buttons) */}
         <nav className="flex-1 px-3 py-2 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -186,7 +204,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   onSelectView(item.id);
                   onCloseMobile();
                 }}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap ${
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
                   isActive
                     ? 'bg-indigo-600 text-white font-semibold shadow-xs'
                     : 'text-slate-300 hover:text-white hover:bg-slate-800/70'
@@ -210,55 +228,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
           })}
         </nav>
 
-        {/* Quick Role Switcher for Demo testing */}
-        <div className="p-4 border-t border-slate-800/80 bg-slate-950/40">
-          <div className="text-[11px] font-medium text-slate-400 mb-2 flex items-center justify-between">
-            <span>Quick Role Switch</span>
-            <span className="text-[10px] text-slate-400 font-mono">Demo Mode</span>
+        {/* User Footer: Role isolation enforced - No role switcher in sidebar! Role switching only on login page */}
+        <div className="p-4 border-t border-slate-800/80 bg-slate-950/60 flex items-center justify-between text-xs text-slate-400">
+          <div className="min-w-0 pr-2">
+            <div className="text-[11px] text-slate-300 break-all leading-tight" title={currentUser?.email}>
+              {currentUser?.email}
+            </div>
           </div>
-          <div className="grid grid-cols-3 gap-1 mb-3">
-            <button
-              onClick={() => switchUser('usr-admin-1')}
-              className={`py-1 text-[11px] font-medium rounded transition-colors ${
-                currentRole === 'ADMIN'
-                  ? 'bg-slate-700 text-white font-semibold'
-                  : 'bg-slate-900 text-slate-400 hover:text-white'
-              }`}
-            >
-              Admin
-            </button>
-            <button
-              onClick={() => switchUser('usr-fac-1')}
-              className={`py-1 text-[11px] font-medium rounded transition-colors ${
-                currentRole === 'FACULTY'
-                  ? 'bg-slate-700 text-white font-semibold'
-                  : 'bg-slate-900 text-slate-400 hover:text-white'
-              }`}
-            >
-              Faculty
-            </button>
-            <button
-              onClick={() => switchUser('usr-stu-1')}
-              className={`py-1 text-[11px] font-medium rounded transition-colors ${
-                currentRole === 'STUDENT'
-                  ? 'bg-slate-700 text-white font-semibold'
-                  : 'bg-slate-900 text-slate-400 hover:text-white'
-              }`}
-            >
-              Student
-            </button>
-          </div>
-
-          <div className="flex items-center justify-between pt-2 text-xs border-t border-slate-800 text-slate-400">
-            <span className="truncate max-w-[120px]">{currentUser?.email}</span>
-            <button
-              onClick={logout}
-              className="text-slate-400 hover:text-rose-400 transition-colors p-1"
-              title="Sign Out"
-            >
-              <LogOut className="w-4 h-4" />
-            </button>
-          </div>
+          <button
+            onClick={logout}
+            className="text-slate-400 hover:text-rose-400 transition-colors p-1.5 rounded-md hover:bg-slate-800 cursor-pointer shrink-0"
+            title="Sign Out to Login"
+            aria-label="Sign out"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
       </aside>
     </>

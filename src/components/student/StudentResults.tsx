@@ -40,12 +40,12 @@ export const StudentResults: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Header (Canonical Title & Single Heading) */}
       <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-base font-bold text-slate-900">Official Semester Results & Academic Transcripts</h2>
+          <h2 className="text-base font-bold text-slate-900">Results</h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Verified institutional examination records with GPA & CGPA computed per official credit rules (Section 4.1.4).
+            Verified institutional examination records with GPA & CGPA computed per official credit rules.
           </p>
         </div>
 
@@ -65,7 +65,7 @@ export const StudentResults: React.FC = () => {
           <Lock className="w-8 h-8 text-slate-400 mx-auto mb-2" />
           <h3 className="text-sm font-bold text-slate-800">No Published Examination Results</h3>
           <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1 leading-relaxed">
-            Per University Regulation Section 4.1.3, semester marks are strictly withheld until the Controller of Examinations and Registrar review and officially publish the results.
+            Per University Regulations, semester marks are strictly withheld until the Controller of Examinations and Registrar review and officially publish the results.
           </p>
         </div>
       ) : (
@@ -167,7 +167,7 @@ export const StudentResults: React.FC = () => {
             <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-2xs">
               <div className="flex items-center gap-2 mb-2">
                 <AlertTriangle className="w-4 h-4 text-amber-600" />
-                <h3 className="text-sm font-bold text-slate-900">Arrear & Re-examination Records (Section 4.1.4)</h3>
+                <h3 className="text-sm font-bold text-slate-900">Arrear &amp; Re-examination Records</h3>
               </div>
               <p className="text-xs text-slate-500 mb-3 leading-relaxed">
                 Per official university regulations, original attempts are permanently preserved. Re-examinations are recorded separately.

@@ -104,11 +104,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
             <span className="text-slate-300">·</span>
             <span className="text-xs text-slate-500 font-mono">Autonomous College Administration</span>
           </div>
-          <h2 className="text-lg font-bold text-slate-900 tracking-tight">
-            Institutional Administration Overview
+          <h2 className="text-base font-bold text-slate-900 tracking-tight">
+            Dashboard
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Real-time admissions, compliance monitoring, exam readiness, and grievance resolution metrics.
+            Real-time admissions, compliance monitoring, exam readiness, and complaint resolution metrics.
           </p>
         </div>
 
@@ -246,7 +246,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
         <StatCard
           label="Actionable Approvals"
           value={pendingAdminApprovals.length + openComplaints.length + pendingApps.length}
-          subValue={`${pendingAdminApprovals.length} Attn · ${openComplaints.length} Grievance · ${pendingApps.length} App`}
+          subValue={`${pendingAdminApprovals.length} Attn · ${openComplaints.length} Complaints · ${pendingApps.length} Apps`}
           trend={{ value: 'Action Required', isNeutral: true }}
           icon={LifeBuoy}
           accentColor="amber"
@@ -260,7 +260,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-600">
-                Section 7.2 &amp; 4.1
+                Pipeline
               </span>
               <span className="text-slate-300">·</span>
               <h3 className="text-sm font-bold text-slate-900">

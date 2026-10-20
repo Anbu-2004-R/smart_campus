@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { ERPProvider } from './context/ERPContext';
 import { MainLayout } from './components/layout/MainLayout';
 import { LoginPage } from './components/auth/LoginPage';
+import { AccessDenied } from './components/common/AccessDenied';
 
 // Admin views
 import { AdminDashboard } from './components/admin/AdminDashboard';
@@ -57,11 +58,47 @@ const AppContent: React.FC = () => {
     setCurrentView(getDefaultView(currentRole));
   }, [currentRole]);
 
+  // URL Hash synchronization with route guard
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#/', '').replace('#', '');
+      if (hash) {
+        // Map common path formats (e.g. 'admin/dashboard' -> 'admin-dashboard')
+        const normalized = hash.replace('/', '-');
+        setCurrentView(normalized);
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   if (!currentUser || showLoginScreen) {
     return <LoginPage onSuccessLogin={() => setShowLoginScreen(false)} />;
   }
 
+  // Strict route guard enforcement (Section 1.1)
+  const isUnauthorized = () => {
+    if (currentRole === 'STUDENT' && (currentView.startsWith('admin-') || currentView.startsWith('faculty-'))) {
+      return true;
+    }
+    if (currentRole === 'FACULTY' && currentView.startsWith('admin-')) {
+      return true;
+    }
+    return false;
+  };
+
   const renderCurrentView = () => {
+    if (isUnauthorized()) {
+      return (
+        <AccessDenied
+          attemptedView={currentView}
+          onRedirect={(safeView) => setCurrentView(safeView)}
+        />
+      );
+    }
+
     switch (currentView) {
       // Admin
       case 'admin-dashboard':

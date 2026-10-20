@@ -167,7 +167,7 @@ export const ExamPublication: React.FC = () => {
               ) : (
                 <>
                   <ShieldAlert className="w-4 h-4 text-rose-600" />
-                  <span>Publication Blocked: Unresolved records detected (Section 4.1.3 Rule).</span>
+                  <span>Publication Blocked: Unresolved records detected.</span>
                 </>
               )}
             </div>
@@ -187,7 +187,7 @@ export const ExamPublication: React.FC = () => {
             <Lock className="w-3.5 h-3.5 text-slate-400" />
             <span>Students cannot view results until official publication is executed by Registrar.</span>
           </div>
-          <span className="font-mono text-slate-400">Section 4.1.3 & 5.3 Enforced</span>
+          <span className="font-mono text-slate-400">Institutional Governance Enforced</span>
         </div>
       </div>
 

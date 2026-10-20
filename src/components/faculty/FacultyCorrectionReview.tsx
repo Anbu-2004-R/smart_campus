@@ -40,7 +40,7 @@ export const FacultyCorrectionReview: React.FC = () => {
     if (!selectedReq) return;
 
     if (reviewAction === 'REJECTED' && !remarks.trim()) {
-      setErrorMsg('Mandatory Rule: Rejections must include an explanation reason (Section 4.1.2).');
+      setErrorMsg('Mandatory Rule: Rejections must include an explanation reason.');
       return;
     }
 

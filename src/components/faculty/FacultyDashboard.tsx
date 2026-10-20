@@ -84,11 +84,11 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({ onNavigate }
             <span className="text-slate-300">·</span>
             <span className="text-xs text-slate-500 font-mono">{currentFacultyProfile?.designation}</span>
           </div>
-          <h2 className="text-lg font-bold text-slate-900 tracking-tight">
-            Welcome, {currentFacultyProfile?.fullName}
+          <h2 className="text-base font-bold text-slate-900 tracking-tight">
+            Dashboard
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Department of Computer Science &amp; Engineering · Employee ID: <span className="font-mono">{currentFacultyProfile?.employeeId}</span>
+            Welcome, {currentFacultyProfile?.fullName} · Department of Computer Science &amp; Engineering · Employee ID: <span className="font-mono">{currentFacultyProfile?.employeeId}</span>
           </p>
         </div>
 
@@ -192,7 +192,7 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({ onNavigate }
           onClick={() => onNavigate('faculty-corrections')}
         />
         <StatCard
-          label="Assigned Grievances"
+          label="Assigned Complaints"
           value={myComplaints.length}
           subValue="Active Redressal Tasks"
           icon={LifeBuoy}

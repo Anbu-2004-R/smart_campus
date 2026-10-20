@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useERP } from '../../context/ERPContext';
 import { Clock, Building, Calendar, User, BookOpen } from 'lucide-react';
 import { TimetableEntry } from '../../types/erp';
+import { getAcademicSessionLabel, ACADEMIC_CALENDAR } from '../../lib/academicCalendar';
 
 export const StudentTimetable: React.FC = () => {
   const { currentStudentProfile } = useAuth();
@@ -31,17 +32,17 @@ export const StudentTimetable: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Header (Canonical Title & Single Heading) */}
       <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-base font-bold text-slate-900">Weekly Class Timetable & Exam Schedule</h2>
+          <h2 className="text-base font-bold text-slate-900">Timetable</h2>
           <p className="text-xs text-slate-500 mt-0.5">
             Official class schedule for {classGroupId.toUpperCase()} (Semester 5). Maintained by Office of the Registrar.
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs font-mono text-slate-600 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
           <Calendar className="w-3.5 h-3.5 text-slate-500" />
-          <span>Autumn Semester 2025–26</span>
+          <span>{getAcademicSessionLabel()}</span>
         </div>
       </div>
 
@@ -114,19 +115,19 @@ export const StudentTimetable: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
           <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
             <div className="font-mono text-indigo-700 font-bold">CS501 · Operating Systems</div>
-            <div className="font-semibold text-slate-900 mt-1">Nov 12, 2025 · 09:30 AM – 12:30 PM</div>
+            <div className="font-semibold text-slate-900 mt-1">Monday, Nov 16, 2026 · 09:30 AM – 12:30 PM</div>
             <div className="text-[11px] text-slate-500 mt-0.5">Venue: LH-101 · Max Marks: 100</div>
           </div>
 
           <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
             <div className="font-mono text-indigo-700 font-bold">CS502 · Database Systems</div>
-            <div className="font-semibold text-slate-900 mt-1">Nov 15, 2025 · 09:30 AM – 12:30 PM</div>
+            <div className="font-semibold text-slate-900 mt-1">Thursday, Nov 19, 2026 · 09:30 AM – 12:30 PM</div>
             <div className="text-[11px] text-slate-500 mt-0.5">Venue: LH-101 · Max Marks: 100</div>
           </div>
 
           <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
             <div className="font-mono text-indigo-700 font-bold">CS503 · Computer Networks</div>
-            <div className="font-semibold text-slate-900 mt-1">Nov 18, 2025 · 09:30 AM – 12:30 PM</div>
+            <div className="font-semibold text-slate-900 mt-1">Monday, Nov 23, 2026 · 09:30 AM – 12:30 PM</div>
             <div className="text-[11px] text-slate-500 mt-0.5">Venue: LH-102 · Max Marks: 100</div>
           </div>
         </div>

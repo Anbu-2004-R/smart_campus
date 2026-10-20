@@ -76,11 +76,11 @@ export const ComplaintDesk: React.FC = () => {
     if (!selectedComplaint) return;
 
     if (newStatus === 'REJECTED' && !rejectionReason.trim()) {
-      setErrorMsg('Mandatory Rule: Rejections must include an explanation reason (Section 4.1.9).');
+      setErrorMsg('Mandatory Rule: Rejections must include an explanation reason.');
       return;
     }
 
-    // 1. Update priority if changed (Decision D-2 / D-5)
+    // 1. Update priority if changed
     if (newPriority !== selectedComplaint.officialPriority) {
       updateComplaintPriority(selectedComplaint.id, newPriority, 'Administrator', 'Confirmed by Admin desk');
     }
@@ -107,10 +107,10 @@ export const ComplaintDesk: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner */}
+      {/* Header Banner (Canonical Title & Single Heading) */}
       <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-base font-bold text-slate-900">Campus Grievance & Complaint Desk</h2>
+          <h2 className="text-base font-bold text-slate-900">Complaints</h2>
           <p className="text-xs text-slate-500 mt-0.5">
             Administers complaints across Academic, Hostel, Infrastructure, and Attendance. Prioritize, assign to staff, and record resolution.
           </p>
@@ -245,7 +245,7 @@ export const ComplaintDesk: React.FC = () => {
         <Modal
           isOpen={isActionModalOpen}
           onClose={() => setIsActionModalOpen(false)}
-          title={`Grievance Redressal: ${selectedComplaint.ticketNumber}`}
+          title={`Complaint Redressal: ${selectedComplaint.ticketNumber}`}
           subtitle={`${selectedComplaint.title}`}
         >
           <form onSubmit={handleApplyAction} className="space-y-4 text-xs">
@@ -316,7 +316,7 @@ export const ComplaintDesk: React.FC = () => {
                 <textarea
                   rows={3}
                   required
-                  placeholder="State the reason why this grievance cannot be entertained..."
+                  placeholder="State the reason why this complaint cannot be entertained..."
                   value={rejectionReason}
                   onChange={(e) => setRejectionReason(e.target.value)}
                   className="w-full text-xs px-3 py-2 bg-rose-50/50 border border-rose-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-rose-500"

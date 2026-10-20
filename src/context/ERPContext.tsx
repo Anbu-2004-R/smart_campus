@@ -29,6 +29,7 @@ import {
   ComplaintPriority,
   Announcement,
   InAppNotification,
+  NotificationCategory,
   AuditLog,
   StudentEnrollment,
   AdmissionApplication,
@@ -62,6 +63,7 @@ import {
   INITIAL_STUDENT_ENROLLMENTS,
   INITIAL_ADMISSION_APPLICATIONS,
 } from '../services/mockData';
+import { ACADEMIC_CALENDAR } from '../lib/academicCalendar';
 
 interface ERPContextType {
   // Enrollment Management (Section 7.2 student_enrollments)
@@ -178,6 +180,13 @@ interface ERPContextType {
   announcements: Announcement[];
   publishAnnouncement: (announcement: Omit<Announcement, 'id' | 'publishedAt'>) => void;
   notifications: InAppNotification[];
+  addNotification: (
+    recipientUserId: string,
+    title: string,
+    message: string,
+    category: NotificationCategory,
+    referenceId?: string
+  ) => void;
   markNotificationAsRead: (id: string) => void;
   markAllNotificationsAsRead: (userId: string) => void;
 
@@ -873,7 +882,7 @@ export const ERPProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       status: 'SUBMITTED',
       submittedAt: timestamp,
       updatedAt: timestamp,
-      timeline: [{ status: 'SUBMITTED', timestamp, changedBy: compData.submitterName, notes: 'Grievance registered in system.' }],
+      timeline: [{ status: 'SUBMITTED', timestamp, changedBy: compData.submitterName, notes: 'Complaint registered in system.' }],
     };
 
     setComplaints((prev) => [newComplaint, ...prev]);
@@ -1138,7 +1147,7 @@ export const ERPProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         departmentId: app.departmentId,
         courseId: app.courseId,
         currentSemester: app.appliedSemester || 1,
-        academicYear: academicYear || app.academicYear || '2025-2026',
+        academicYear: academicYear || app.academicYear || ACADEMIC_CALENDAR.academicYear,
         email: app.email,
         phone: app.phone,
         dateOfBirth: app.dateOfBirth,
@@ -1158,7 +1167,7 @@ export const ERPProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         courseName: crs?.name || 'Undergraduate Programme',
         departmentId: app.departmentId,
         departmentCode: deptCode,
-        academicYear: academicYear || app.academicYear || '2025-2026',
+        academicYear: academicYear || app.academicYear || ACADEMIC_CALENDAR.academicYear,
         semester: app.appliedSemester || 1,
         classGroupId: assignedClassGroupId,
         classGroupName: grp?.name || 'Class Section A',
@@ -1380,6 +1389,7 @@ export const ERPProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         announcements,
         publishAnnouncement,
         notifications,
+        addNotification,
         markNotificationAsRead,
         markAllNotificationsAsRead,
 

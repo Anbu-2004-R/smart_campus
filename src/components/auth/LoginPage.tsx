@@ -324,7 +324,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccessLogin }) => {
       (app) =>
         app.applicationNumber.toLowerCase() === q ||
         app.email.toLowerCase() === q ||
-        app.fullName.toLowerCase().includes(q)
+        app.applicantName.toLowerCase().includes(q)
     );
     setInquiryResult(found || null);
   };
@@ -990,7 +990,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccessLogin }) => {
         <Modal
           isOpen={isAppInquiryModalOpen}
           onClose={() => setIsAppInquiryModalOpen(false)}
-          title="Admissions Application Status Inquiry (Section 7.2)"
+          title="Admissions Application Status Inquiry"
           subtitle="Prospective students who submitted an admission application can check their real-time review status."
         >
           <div className="space-y-4 text-xs">
@@ -1046,7 +1046,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccessLogin }) => {
                   <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
                     <div className="flex items-center justify-between">
                       <div className="font-bold text-slate-900 text-sm">
-                        {inquiryResult.fullName}
+                        {inquiryResult.applicantName}
                       </div>
                       <span
                         className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${
@@ -1069,12 +1069,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccessLogin }) => {
                         <strong>{inquiryResult.applicationNumber}</strong>
                       </div>
                       <div>
-                        <span className="text-slate-400 block text-[10px]">Degree Programme:</span>
-                        <strong>{inquiryResult.degreeType} {inquiryResult.appliedDepartmentId.replace('dept-', '').toUpperCase()}</strong>
+                        <span className="text-slate-400 block text-[10px]">Department ID:</span>
+                        <strong>{inquiryResult.departmentId.replace('dept-', '').toUpperCase()}</strong>
                       </div>
                       <div>
                         <span className="text-slate-400 block text-[10px]">Qualifying Score:</span>
-                        <strong>{inquiryResult.qualifyingScore}%</strong>
+                        <strong>{inquiryResult.percentageOrGpa}%</strong>
                       </div>
                       <div>
                         <span className="text-slate-400 block text-[10px]">Submission Date:</span>
@@ -1089,7 +1089,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccessLogin }) => {
                           <span>Admission Approved by Registrar!</span>
                         </div>
                         <p>
-                          Your student account has been provisioned. Use login ID <strong>{inquiryResult.allocatedRegisterNumber || '21cs101'}</strong> and default password <strong>student123</strong> to enter your student dashboard.
+                          Your student account has been provisioned. Use login ID <strong>{inquiryResult.generatedRegisterNumber || '21cs101'}</strong> and default password <strong>student123</strong> to enter your student dashboard.
                         </p>
                       </div>
                     )}
@@ -1100,9 +1100,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccessLogin }) => {
                       </div>
                     )}
 
-                    {inquiryResult.reviewNotes && (
+                    {inquiryResult.reviewRemarks && (
                       <div className="text-[11px] text-slate-500 italic">
-                        Committee Remarks: &ldquo;{inquiryResult.reviewNotes}&rdquo;
+                        Committee Remarks: &ldquo;{inquiryResult.reviewRemarks}&rdquo;
                       </div>
                     )}
                   </div>
